@@ -26,9 +26,9 @@ async def make_song_request(url: str) -> dict[str, Any] | None:
 
 
 @mcp.tool()
-async get_song(song_tittle: str) -> str:
-    songs_url = f"{SONGS_API_BASE}/{ARTIST}/{song_tittle}"
-    logging.info(f"Processing request for song: {song_tittle}\n")
+async def get_song(song_title: str) -> str:
+    songs_url = f"{SONGS_API_BASE}/{ARTIST}/{song_title}"
+    logging.info(f"Processing request for song: {song_title}\n")
 
     lyrics = await make_song_request(url=url)
 
