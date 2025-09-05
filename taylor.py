@@ -35,7 +35,7 @@ async def get_song(song_title: str) -> str:
     if not lyrics:
         return "Unable to fetch detailed lyrics for that song."
 
-    return lyrics.get("lyrics", "Lyrics not found")
+    return lyrics.get("lyrics", "Lyrics not found.")
 
 
 if __name__ == "__main__":
