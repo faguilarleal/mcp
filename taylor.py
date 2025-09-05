@@ -30,12 +30,12 @@ async def get_song(song_title: str) -> str:
     songs_url = f"{SONGS_API_BASE}/{ARTIST}/{song_title}"
     logging.info(f"Processing request for song: {song_title}\n")
 
-    lyrics = await make_song_request(url=url)
+    lyrics = await make_song_request(url=songs_url)
 
     if not lyrics:
         return "Unable to fetch detailed lyrics for that song."
 
-    return lyrics
+    return lyrics.get("lyrics", "Lyrics not found")
 
 
 if __name__ == "__main__":
