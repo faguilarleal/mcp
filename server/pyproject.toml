@@ -1,12 +1,10 @@
 [project]
 name = "taylor"
 version = "0.1.0"
-description = "mcp SERVER para canciones de taylor"
+description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "fastmcp>=2.12.2",
     "httpx>=0.28.1",
-    "mcp-server-git>=2025.7.1",
     "mcp[cli]>=1.13.1",
 ]
