@@ -4,9 +4,11 @@ from mcp.server.fastmcp import FastMCP
 import logging
 import re
 from collections import Counter
+import asyncio
+import os
 
 # Initialize FastMCP server
-mcp = FastMCP("taylor-swift-analyzer")
+mcp = FastMCP("taylor")
 
 # Constants
 SONGS_API_BASE = "https://api.lyrics.ovh/v1"
@@ -15,7 +17,6 @@ ARTIST = "Taylor Swift"
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
 
 async def make_song_request(url: str) -> dict[str, Any] | None:
     """Make a request to the lyrics API with proper error handling."""
@@ -34,7 +35,6 @@ async def make_song_request(url: str) -> dict[str, Any] | None:
         except Exception as e:
             logger.error(f"Request error for URL {url}: {str(e)}")
             return None
-
 
 def analyze_lyrics_content(lyrics: str) -> Dict[str, Any]:
     """
@@ -128,7 +128,6 @@ def analyze_lyrics_content(lyrics: str) -> Dict[str, Any]:
         }
     }
 
-
 def format_analysis_summary(song_title: str, analysis: Dict[str, Any]) -> str:
     """
     Format the analysis results into a readable summary
@@ -141,7 +140,7 @@ def format_analysis_summary(song_title: str, analysis: Dict[str, Any]) -> str:
         Formatted summary string
     """
     if "error" in analysis:
-        return f"❌ Analysis failed for '{song_title}': {analysis['error']}"
+        return f"Analysis failed for '{song_title}': {analysis['error']}"
     
     stats = analysis["basic_stats"]
     emotions = analysis["emotional_analysis"]
@@ -164,31 +163,30 @@ def format_analysis_summary(song_title: str, analysis: Dict[str, Any]) -> str:
     characteristics_str = ", ".join(char_list) if char_list else "Standard pop song structure"
     
     summary = f"""
-🎵 TAYLOR SWIFT SONG ANALYSIS: '{song_title.upper()}'
+TAYLOR SWIFT SONG ANALYSIS: '{song_title.upper()}'
 
-📊 BASIC STATISTICS:
+BASIC STATISTICS:
 • Total words: {stats['total_words']}
 • Unique words: {stats['unique_words']}
 • Lines: {stats['lines_count']}
 • Vocabulary density: {stats['vocabulary_density_percent']}%
 
-💭 EMOTIONAL PROFILE:
+EMOTIONAL PROFILE:
 • Overall tendency: {emotions['emotional_tendency'].upper()}
 • Positive indicators: {emotions['positive_words_count']}
 • Negative indicators: {emotions['negative_words_count']}
 • Romantic elements: {emotions['romantic_words_count']}
 • Emotional intensity: {emotions['emotional_intensity']}
 
-🎭 SONG CHARACTERISTICS:
+SONG CHARACTERISTICS:
 • {characteristics_str}
 
-🔤 MOST FREQUENT MEANINGFUL WORDS:"""
+MOST FREQUENT MEANINGFUL WORDS:"""
     
     for word, count in top_words:
         summary += f"\n• '{word}' appears {count} times"
     
     return summary.strip()
-
 
 @mcp.tool()
 async def get_song_lyrics(song_title: str) -> str:
@@ -207,19 +205,18 @@ async def get_song_lyrics(song_title: str) -> str:
     response = await make_song_request(url=songs_url)
 
     if not response:
-        return f"❌ Unable to fetch lyrics for '{song_title}'. Please check the song title spelling."
+        return f"Unable to fetch lyrics for '{song_title}'. Please check the song title spelling."
 
     lyrics = response.get("lyrics", "Lyrics not found.")
     
     if lyrics == "Lyrics not found.":
-        return f"❌ Lyrics not found for '{song_title}'. The song might not be available in the database."
+        return f"Lyrics not found for '{song_title}'. The song might not be available in the database."
     
     # Return a brief preview instead of full lyrics to respect copyright
     lines = lyrics.split('\n')[:4]  # First 4 lines only
     preview = '\n'.join(lines)
     
     return f"✅ Lyrics found for '{song_title}'\n\nPreview (first few lines):\n{preview}\n\n[Full lyrics retrieved for analysis]"
-
 
 @mcp.tool()
 async def analyze_song(song_title: str) -> str:
@@ -240,19 +237,18 @@ async def analyze_song(song_title: str) -> str:
     response = await make_song_request(url=songs_url)
 
     if not response:
-        return f"❌ Unable to fetch data for '{song_title}'. Please verify the song title."
+        return f"Unable to fetch data for '{song_title}'. Please verify the song title."
 
     lyrics = response.get("lyrics", "")
     
     if not lyrics or lyrics == "Lyrics not found.":
-        return f"❌ No lyrics available for analysis of '{song_title}'"
+        return f"No lyrics available for analysis of '{song_title}'"
     
     # Perform analysis
     analysis = analyze_lyrics_content(lyrics)
     
     # Format and return results
     return format_analysis_summary(song_title, analysis)
-
 
 @mcp.tool()
 async def compare_songs(song1: str, song2: str) -> str:
@@ -276,26 +272,26 @@ async def compare_songs(song1: str, song2: str) -> str:
     response2 = await make_song_request(url2)
     
     if not response1:
-        return f"❌ Could not fetch data for '{song1}'"
+        return f"Could not fetch data for '{song1}'"
     if not response2:
-        return f"❌ Could not fetch data for '{song2}'"
+        return f"Could not fetch data for '{song2}'"
     
     lyrics1 = response1.get("lyrics", "")
     lyrics2 = response2.get("lyrics", "")
     
     if not lyrics1:
-        return f"❌ No lyrics available for '{song1}'"
+        return f"No lyrics available for '{song1}'"
     if not lyrics2:
-        return f"❌ No lyrics available for '{song2}'"
+        return f"No lyrics available for '{song2}'"
     
     # Analyze both songs
     analysis1 = analyze_lyrics_content(lyrics1)
     analysis2 = analyze_lyrics_content(lyrics2)
     
     if "error" in analysis1:
-        return f"❌ Analysis failed for '{song1}'"
+        return f"Analysis failed for '{song1}'"
     if "error" in analysis2:
-        return f"❌ Analysis failed for '{song2}'"
+        return f"Analysis failed for '{song2}'"
     
     # Generate comparison
     stats1 = analysis1["basic_stats"]
@@ -306,32 +302,31 @@ async def compare_songs(song1: str, song2: str) -> str:
     chars2 = analysis2["song_characteristics"]
     
     comparison = f"""
-🎵 SONG COMPARISON: '{song1.upper()}' vs '{song2.upper()}'
+SONG COMPARISON: '{song1.upper()}' vs '{song2.upper()}'
 
-📊 STATISTICS COMPARISON:
+STATISTICS COMPARISON:
 • {song1}: {stats1['total_words']} words, {emotions1['emotional_tendency']} tendency
 • {song2}: {stats2['total_words']} words, {emotions2['emotional_tendency']} tendency
 
-💭 EMOTIONAL ANALYSIS:
+EMOTIONAL ANALYSIS:
 • {song1}: {emotions1['positive_words_count']} positive, {emotions1['negative_words_count']} negative, {emotions1['romantic_words_count']} romantic
 • {song2}: {emotions2['positive_words_count']} positive, {emotions2['negative_words_count']} negative, {emotions2['romantic_words_count']} romantic
 
-🎭 CHARACTERISTICS:
+CHARACTERISTICS:
 • {song1}: {'Romantic' if chars1['is_romantic'] else 'Non-romantic'}, {'Melancholic' if chars1['is_melancholic'] else 'Non-melancholic'}, {'Upbeat' if chars1['is_upbeat'] else 'Not upbeat'}
 • {song2}: {'Romantic' if chars2['is_romantic'] else 'Non-romantic'}, {'Melancholic' if chars2['is_melancholic'] else 'Non-melancholic'}, {'Upbeat' if chars2['is_upbeat'] else 'Not upbeat'}
 
-🏆 COMPARISON WINNERS:
+COMPARISON WINNERS:
 • More positive: {song1 if emotions1['positive_words_count'] > emotions2['positive_words_count'] else song2 if emotions2['positive_words_count'] > emotions1['positive_words_count'] else 'Tie'}
 • More romantic: {song1 if emotions1['romantic_words_count'] > emotions2['romantic_words_count'] else song2 if emotions2['romantic_words_count'] > emotions1['romantic_words_count'] else 'Tie'}
 • More complex vocabulary: {song1 if stats1['vocabulary_density_percent'] > stats2['vocabulary_density_percent'] else song2}
 • Longer: {song1 if stats1['total_words'] > stats2['total_words'] else song2}
 
-🎯 SUMMARY:
+SUMMARY:
 Both songs showcase Taylor Swift's songwriting evolution with distinct emotional profiles and structural approaches.
 """
     
     return comparison.strip()
-
 
 @mcp.tool()
 async def get_song_stats_only(song_title: str) -> str:
@@ -350,23 +345,23 @@ async def get_song_stats_only(song_title: str) -> str:
     response = await make_song_request(url=songs_url)
 
     if not response:
-        return f"❌ Unable to fetch data for '{song_title}'"
+        return f"Unable to fetch data for '{song_title}'"
 
     lyrics = response.get("lyrics", "")
     
     if not lyrics:
-        return f"❌ No lyrics available for '{song_title}'"
+        return f"No lyrics available for '{song_title}'"
     
     analysis = analyze_lyrics_content(lyrics)
     
     if "error" in analysis:
-        return f"❌ Analysis failed: {analysis['error']}"
+        return f"Analysis failed: {analysis['error']}"
     
     stats = analysis["basic_stats"]
     emotions = analysis["emotional_analysis"]
     
     return f"""
-📊 QUICK STATS for '{song_title.upper()}':
+QUICK STATS for '{song_title.upper()}':
 • Words: {stats['total_words']} total, {stats['unique_words']} unique
 • Lines: {stats['lines_count']}
 • Vocabulary density: {stats['vocabulary_density_percent']}%
@@ -377,5 +372,12 @@ async def get_song_stats_only(song_title: str) -> str:
 
 if __name__ == "__main__":
     logger.info("Starting Taylor Swift MCP Analysis Server...")
-    # Initialize and run the server
+    # Initialize and run the server.
     mcp.run(transport='stdio')
+    # asyncio.run(
+    #     mcp.run_async(
+    #         transport="streamable-http", 
+    #         host="0.0.0.0", 
+    #         port=os.getenv("PORT", 8080),
+    #     )
+    # )

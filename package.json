@@ -1,0 +1,11 @@
+{
+  "name": "mcp",
+  "version": "1.0.0",
+  "description": "```comandline\r uv init taylor\r cd taylor\r ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
