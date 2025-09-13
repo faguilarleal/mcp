@@ -1,0 +1,3 @@
+[servers.local_server]
+script = "../../server/server.py"
+enabled = true
