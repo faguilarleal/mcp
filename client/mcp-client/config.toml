@@ -1,3 +1,8 @@
 [servers.local_server]
 script = "../../server/server.py"
 enabled = true
+
+[servers.git]
+command = "python"
+args = ["-m", "mcp_server_git", "--repository", "../../"]
+enabled = true

@@ -121,7 +121,7 @@ class MCPMultiClient:
                 server_tools = []
                 for tool in response.tools:
                     tool_info = {
-                        "name": f"{server_name}.{tool.name}",  # Prefix with server name
+                        "name": f"{tool.name}",  # Prefix with server name
                         "description": f"[{server_name}] {tool.description}",
                         "input_schema": tool.inputSchema,
                         "_server": server_name,
@@ -176,21 +176,26 @@ class MCPMultiClient:
 
         print(f"\nConnected to server with tools: {[tool.name for tool in response.tools]}")
 
+
     async def process_query(self, query: str) -> str:
         """Process a query using Claude and available tools"""
+        import copy
+
         messages = [{"role": "user", "content": query}]
 
-        # Create tools list for Claude (without internal metadata)
+        # --- Prepara herramientas para Claude ---
         claude_tools = []
         for tool in self.available_tools:
+            # Asegurarse de que el nombre es válido
+            valid_name = tool["name"].replace(".", "_")  # ya debería ser así
             claude_tool = {
-                "name": tool["name"],
+                "name": valid_name,
                 "description": tool["description"],
                 "input_schema": tool["input_schema"]
             }
             claude_tools.append(claude_tool)
 
-        # Initial Claude API call
+        # --- Llamada inicial a Claude ---
         response = self.anthropic.messages.create(
             model=MODEL,
             max_tokens=1000,
@@ -198,42 +203,41 @@ class MCPMultiClient:
             tools=claude_tools
         )
 
-        # Process response and handle tool calls
         final_text = []
         assistant_message_content = []
 
+        # --- Procesa la respuesta de Claude ---
         for content in response.content:
-            if content.type == 'text':
+            if content.type == "text":
                 final_text.append(content.text)
                 assistant_message_content.append(content)
-            elif content.type == 'tool_use':
+
+            elif content.type == "tool_use":
                 tool_name = content.name
                 tool_args = content.input
 
-                # Find the tool and its server
-                tool_info = None
-                for tool in self.available_tools:
-                    if tool["name"] == tool_name:
-                        tool_info = tool
-                        break
-                
-                if tool_info is None:
+                # Busca la herramienta correcta en available_tools
+                tool_info = next((t for t in self.available_tools if t["name"] == tool_name), None)
+
+                if not tool_info:
                     final_text.append(f"[Error: Tool {tool_name} not found]")
                     continue
 
                 server_name = tool_info["_server"]
                 original_tool_name = tool_info["_original_name"]
-                
-                # Execute tool call on the appropriate server
+
+                # Llamada segura al servidor
                 try:
                     session = self.sessions[server_name]
                     result = await session.call_tool(original_tool_name, tool_args)
+
                     final_text.append(f"[Called {tool_name} on {server_name}]")
-                    
+
+                    # Actualiza mensajes para Claude con el resultado del tool
                     assistant_message_content.append(content)
                     messages.append({
                         "role": "assistant",
-                        "content": assistant_message_content
+                        "content": copy.deepcopy(assistant_message_content)
                     })
                     messages.append({
                         "role": "user",
@@ -244,7 +248,7 @@ class MCPMultiClient:
                         }]
                     })
 
-                    # Get next response from Claude
+                    # Obtener siguiente respuesta de Claude
                     response = self.anthropic.messages.create(
                         model=MODEL,
                         max_tokens=1000,
@@ -254,12 +258,14 @@ class MCPMultiClient:
 
                     if response.content and response.content[0].text:
                         final_text.append(response.content[0].text)
-                        
+
                 except Exception as e:
                     final_text.append(f"[Error calling {tool_name}: {str(e)}]")
 
         return "\n".join(final_text)
-    
+
+
+
     async def list_servers_and_tools(self):
         """List all connected servers and their tools"""
         print("\n=== Connected Servers ===")
