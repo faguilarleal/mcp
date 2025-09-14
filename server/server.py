@@ -250,83 +250,6 @@ async def analyze_song(song_title: str) -> str:
     # Format and return results
     return format_analysis_summary(song_title, analysis)
 
-@mcp.tool()
-async def compare_songs(song1: str, song2: str) -> str:
-    """
-    Compare the emotional and structural characteristics of two Taylor Swift songs
-    
-    Args:
-        song1: First song title
-        song2: Second song title
-        
-    Returns:
-        Comparative analysis report
-    """
-    logger.info(f"Comparing songs: '{song1}' vs '{song2}'")
-    
-    # Fetch lyrics for both songs
-    url1 = f"{SONGS_API_BASE}/{ARTIST}/{song1}"
-    url2 = f"{SONGS_API_BASE}/{ARTIST}/{song2}"
-    
-    response1 = await make_song_request(url1)
-    response2 = await make_song_request(url2)
-    
-    if not response1:
-        return f"Could not fetch data for '{song1}'"
-    if not response2:
-        return f"Could not fetch data for '{song2}'"
-    
-    lyrics1 = response1.get("lyrics", "")
-    lyrics2 = response2.get("lyrics", "")
-    
-    if not lyrics1:
-        return f"No lyrics available for '{song1}'"
-    if not lyrics2:
-        return f"No lyrics available for '{song2}'"
-    
-    # Analyze both songs
-    analysis1 = analyze_lyrics_content(lyrics1)
-    analysis2 = analyze_lyrics_content(lyrics2)
-    
-    if "error" in analysis1:
-        return f"Analysis failed for '{song1}'"
-    if "error" in analysis2:
-        return f"Analysis failed for '{song2}'"
-    
-    # Generate comparison
-    stats1 = analysis1["basic_stats"]
-    stats2 = analysis2["basic_stats"]
-    emotions1 = analysis1["emotional_analysis"]
-    emotions2 = analysis2["emotional_analysis"]
-    chars1 = analysis1["song_characteristics"]
-    chars2 = analysis2["song_characteristics"]
-    
-    comparison = f"""
-SONG COMPARISON: '{song1.upper()}' vs '{song2.upper()}'
-
-STATISTICS COMPARISON:
-• {song1}: {stats1['total_words']} words, {emotions1['emotional_tendency']} tendency
-• {song2}: {stats2['total_words']} words, {emotions2['emotional_tendency']} tendency
-
-EMOTIONAL ANALYSIS:
-• {song1}: {emotions1['positive_words_count']} positive, {emotions1['negative_words_count']} negative, {emotions1['romantic_words_count']} romantic
-• {song2}: {emotions2['positive_words_count']} positive, {emotions2['negative_words_count']} negative, {emotions2['romantic_words_count']} romantic
-
-CHARACTERISTICS:
-• {song1}: {'Romantic' if chars1['is_romantic'] else 'Non-romantic'}, {'Melancholic' if chars1['is_melancholic'] else 'Non-melancholic'}, {'Upbeat' if chars1['is_upbeat'] else 'Not upbeat'}
-• {song2}: {'Romantic' if chars2['is_romantic'] else 'Non-romantic'}, {'Melancholic' if chars2['is_melancholic'] else 'Non-melancholic'}, {'Upbeat' if chars2['is_upbeat'] else 'Not upbeat'}
-
-COMPARISON WINNERS:
-• More positive: {song1 if emotions1['positive_words_count'] > emotions2['positive_words_count'] else song2 if emotions2['positive_words_count'] > emotions1['positive_words_count'] else 'Tie'}
-• More romantic: {song1 if emotions1['romantic_words_count'] > emotions2['romantic_words_count'] else song2 if emotions2['romantic_words_count'] > emotions1['romantic_words_count'] else 'Tie'}
-• More complex vocabulary: {song1 if stats1['vocabulary_density_percent'] > stats2['vocabulary_density_percent'] else song2}
-• Longer: {song1 if stats1['total_words'] > stats2['total_words'] else song2}
-
-SUMMARY:
-Both songs showcase Taylor Swift's songwriting evolution with distinct emotional profiles and structural approaches.
-"""
-    
-    return comparison.strip()
 
 @mcp.tool()
 async def get_song_stats_only(song_title: str) -> str:
@@ -373,9 +296,7 @@ from fastmcp import FastMCP
 
 if __name__ == "__main__":
     logger.info("Starting Taylor Swift MCP Analysis Server...")
-    
 
-   
     # desarrollo remoto    
     # mcp.run(transport='sse')
 

@@ -2,6 +2,10 @@
 script = "../../server/server.py"
 enabled = true
 
+[servers.local_server2]
+script = "../../server/weather.py"
+enabled = true
+
 [servers.git]
 command = "python"
 args = ["-m", "mcp_server_git", "--repository", "../../"]

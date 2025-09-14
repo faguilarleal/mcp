@@ -67,3 +67,88 @@ Aquí tienes el análisis completo de "Out of the Woods" de Taylor Swift:
 
 ## Análisis de "Lov...' (Tools used: analyze_song@taylor)
 [2025-09-25 16:58:32] SHUTDOWN  MCP Client shutting down
+[2025-09-25 17:12:33] STARTUP  MCP Multi-Client initialized
+[2025-09-25 17:12:34] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 17:12:34] SHUTDOWN  MCP Client shutting down
+[2025-09-25 17:13:00] STARTUP  MCP Multi-Client initialized
+[2025-09-25 17:13:00] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 17:13:00] SHUTDOWN  MCP Client shutting down
+[2025-09-25 17:13:20] STARTUP  MCP Multi-Client initialized
+[2025-09-25 17:13:20] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 17:13:20] SHUTDOWN  MCP Client shutting down
+[2025-09-25 17:13:32] STARTUP  MCP Multi-Client initialized
+[2025-09-25 17:13:37] SERVER  Server local_server: CONNECTED - Tools: get_song_lyrics, analyze_song, compare_songs, get_song_stats_only
+[2025-09-25 17:13:40] SERVER  Server git: CONNECTED - Tools: git_status, git_diff_unstaged, git_diff_staged, git_diff, git_commit, git_add, git_reset, git_log, git_create_branch, git_checkout, git_show, git_init, git_branch
+[2025-09-25 17:13:40] SERVER  Server filesystem: CONNECTED - Tools: read_file, read_text_file, read_media_file, read_multiple_files, write_file, edit_file, create_directory, list_directory, list_directory_with_sizes, directory_tree, move_file, search_files, get_file_info, list_allowed_directories
+[2025-09-25 17:13:58] SHUTDOWN  MCP Client shutting down
+[2025-09-25 17:14:01] STARTUP  MCP Multi-Client initialized
+[2025-09-25 17:14:03] SERVER  Server local_server: CONNECTED - Tools: get_song_lyrics, analyze_song, compare_songs, get_song_stats_only
+[2025-09-25 17:14:04] SERVER  Server local_server2: CONNECTED - Tools: get_current_weather, get_weather_forecast, get_weather_by_coordinates, get_weather_alerts
+[2025-09-25 17:14:06] SERVER  Server git: CONNECTED - Tools: git_status, git_diff_unstaged, git_diff_staged, git_diff, git_commit, git_add, git_reset, git_log, git_create_branch, git_checkout, git_show, git_init, git_branch
+[2025-09-25 17:14:06] SERVER  Server filesystem: CONNECTED - Tools: read_file, read_text_file, read_media_file, read_multiple_files, write_file, edit_file, create_directory, list_directory, list_directory_with_sizes, directory_tree, move_file, search_files, get_file_info, list_allowed_directories
+[2025-09-25 17:14:43] USER_QUERY [2448ba54-596] 'me puedes dar el estatus del clima en Guatemala 502 en celcius'
+[2025-09-25 17:14:48] TOOL_CALL [2448ba54-596] get_current_weather@local_server2 SUCCESS - Args: {"city": "Guatemala", "country": "GT", "units": "metric"}
+[2025-09-25 17:14:53] ASSISTANT [2448ba54-596] 'Te ayudo a obtener el clima actual en Guatemala. Voy a consultar la información meteorológica usando el código de país GT (Guatemala) y en grados Celsius.
+[✅ Called get_current_weather on local_server...' (Tools used: get_current_weather@local_server2)
+[2025-09-25 17:19:30] SHUTDOWN  MCP Client shutting down
+[2025-09-25 17:19:35] STARTUP  MCP Multi-Client initialized
+[2025-09-25 17:19:37] SERVER  Server local_server: CONNECTED - Tools: get_song_lyrics, analyze_song, compare_songs, get_song_stats_only
+[2025-09-25 17:19:38] SERVER  Server local_server2: CONNECTED - Tools: get_alerts, get_forecast
+[2025-09-25 17:19:39] SERVER  Server git: CONNECTED - Tools: git_status, git_diff_unstaged, git_diff_staged, git_diff, git_commit, git_add, git_reset, git_log, git_create_branch, git_checkout, git_show, git_init, git_branch
+[2025-09-25 17:19:39] SERVER  Server filesystem: CONNECTED - Tools: read_file, read_text_file, read_media_file, read_multiple_files, write_file, edit_file, create_directory, list_directory, list_directory_with_sizes, directory_tree, move_file, search_files, get_file_info, list_allowed_directories
+[2025-09-25 17:20:32] USER_QUERY [0422c930-7d0] 'me puedes dar alertas del clima de estados unidos'
+[2025-09-25 17:20:38] ASSISTANT [0422c930-7d0] 'Para obtener alertas del clima de Estados Unidos, necesito que me proporciones el código de dos letras del estado que te interesa. Por ejemplo:
+
+- CA para California
+- NY para Nueva York  
+- TX para T...'
+[2025-09-25 17:20:51] USER_QUERY [0422c930-7d0] 'NY'
+[2025-09-25 17:21:50] TOOL_CALL [0422c930-7d0] get_alerts@local_server2 SUCCESS - Args: {"state": "NY"}
+[2025-09-25 17:22:02] ASSISTANT [0422c930-7d0] '[✅ Called get_alerts on local_server2]
+Aquí están las alertas meteorológicas actuales para el estado de Nueva York (NY):
+
+## 📌 **Alertas Climáticas Activas**
+
+### 🌊 **1. Aviso de Inundación - Condado ...' (Tools used: get_alerts@local_server2)
+[2025-09-25 17:45:07] SHUTDOWN  MCP Client shutting down
+[2025-09-25 17:58:25] STARTUP  MCP Multi-Client initialized
+[2025-09-25 17:58:26] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 17:58:26] SHUTDOWN  MCP Client shutting down
+[2025-09-25 17:59:58] STARTUP  MCP Multi-Client initialized
+[2025-09-25 17:59:59] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 17:59:59] SHUTDOWN  MCP Client shutting down
+[2025-09-25 18:00:06] STARTUP  MCP Multi-Client initialized
+[2025-09-25 18:00:07] SERVER  Server taylor: CONNECTED - Tools: get_song_lyrics, analyze_song, compare_songs, get_song_stats_only
+[2025-09-25 18:00:19] SHUTDOWN  MCP Client shutting down
+[2025-09-25 18:13:57] STARTUP  MCP Multi-Client initialized
+[2025-09-25 18:14:01] SERVER  Server local_server: CONNECTED - Tools: get_song_lyrics, analyze_song
+[2025-09-25 18:14:02] SERVER  Server local_server2: CONNECTED - Tools: get_alerts, get_forecast
+[2025-09-25 18:14:04] SERVER  Server git: CONNECTED - Tools: git_status, git_diff_unstaged, git_diff_staged, git_diff, git_commit, git_add, git_reset, git_log, git_create_branch, git_checkout, git_show, git_init, git_branch
+[2025-09-25 18:14:04] SERVER  Server filesystem: CONNECTED - Tools: read_file, read_text_file, read_media_file, read_multiple_files, write_file, edit_file, create_directory, list_directory, list_directory_with_sizes, directory_tree, move_file, search_files, get_file_info, list_allowed_directories
+[2025-09-25 18:17:46] SHUTDOWN  MCP Client shutting down
+[2025-09-25 18:19:41] STARTUP  MCP Multi-Client initialized
+[2025-09-25 18:19:43] SERVER  Server local_server: CONNECTED - Tools: get_song_lyrics, analyze_song, get_song_stats_only
+[2025-09-25 18:19:44] SERVER  Server local_server2: CONNECTED - Tools: get_alerts, get_forecast
+[2025-09-25 18:19:45] SERVER  Server git: CONNECTED - Tools: git_status, git_diff_unstaged, git_diff_staged, git_diff, git_commit, git_add, git_reset, git_log, git_create_branch, git_checkout, git_show, git_init, git_branch
+[2025-09-25 18:19:46] SERVER  Server filesystem: CONNECTED - Tools: read_file, read_text_file, read_media_file, read_multiple_files, write_file, edit_file, create_directory, list_directory, list_directory_with_sizes, directory_tree, move_file, search_files, get_file_info, list_allowed_directories
+[2025-09-25 18:19:57] USER_QUERY [9e870276-399] 'letra de la cancion lover'
+[2025-09-25 18:20:02] TOOL_CALL [9e870276-399] get_song_lyrics@local_server SUCCESS - Args: {"song_title": "Lover"}
+[2025-09-25 18:20:08] ASSISTANT [9e870276-399] 'I understand you're looking for the lyrics to "Lover" by Taylor Swift. However, I need to be careful about reproducing copyrighted song lyrics in full. 
+
+Let me try to get the lyrics for you using the...' (Tools used: get_song_lyrics@local_server)
+[2025-09-25 18:20:33] SHUTDOWN  MCP Client shutting down
+[2025-09-25 18:37:21] STARTUP  MCP Multi-Client initialized
+[2025-09-25 18:37:24] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 18:37:24] SHUTDOWN  MCP Client shutting down
+[2025-09-25 18:39:12] STARTUP  MCP Multi-Client initialized
+[2025-09-25 18:39:13] SERVER  Server taylor: CONNECTED - Tools: get_song_lyrics, analyze_song, compare_songs, get_song_stats_only
+[2025-09-25 18:39:43] USER_QUERY [2653f3b2-c4a] 'puedes analizar la cancion de lover de taylor'
+[2025-09-25 18:39:47] TOOL_CALL [2653f3b2-c4a] analyze_song@taylor SUCCESS - Args: {"song_title": "Lover"}
+[2025-09-25 18:39:56] ASSISTANT [2653f3b2-c4a] '¡Por supuesto! Voy a analizar la canción "Lover" de Taylor Swift para ti.
+[✅ Called analyze_song on taylor]
+¡Aquí tienes el análisis completo de "Lover" de Taylor Swift!
+
+## Análisis de "Lover"
+
+**Car...' (Tools used: analyze_song@taylor)
+[2025-09-25 18:40:02] SHUTDOWN  MCP Client shutting down

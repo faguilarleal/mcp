@@ -19,15 +19,7 @@ Correr en ambiente virtual
 pip install requirements.txt
 ```
 
-### Variables de Entorno (Opcionales)
 
-Crea un archivo `.env` si necesitas configuraciones específicas:
-
-```bash
-# Para modo HTTP (opcional)
-PORT=8080
-DEBUG=true
-```
 
 ##  Formas de Ejecutar el Servidor
 
@@ -75,11 +67,7 @@ enabled = true
 ```
 
 
-### Ejecutar Multi-Servidor
 
-```bash
-python client.py multi_servers.toml
-```
 
 ##  Herramientas Disponibles
 
@@ -157,17 +145,21 @@ enabled = false
 
 La conección es por medio de sse    
 
-[ Leer documentación de la librería de FastMCP]([https://](https://pypi.org/project/fastmcp/))
+Para este proyecto se utilizo un ec2 de aws 
 
-```python
-sse_transport = await self.exit_stack.enter_async_context(
-      sse_client(server_url, headers=headers) 
-)
-read, write = sse_transport
+1. Clonar el repositorio en el servidor remoto 
+ip publica: 34.201.103.76
+encontrar el key en server\KeyTaylor.ppk para poder ingresar en el puerto 22 via ssh
+```bash
+uv venv
+source .venv/bin/activate
+uv add "mcp[cli]" httpx
+uv add fastmcp
+uv run server.py
+```
 
-session = await self.exit_stack.enter_async_context(
-    ClientSession(read, write)
-)
-await session.initialize()
+2. Luego en tu computadora donde tienes clonado el cliente ejecuta
 
+```bash
+python client.py http://34.201.103.76:8000/sse
 ```
