@@ -1,6 +1,6 @@
 [servers.local_server]
 script = "../../server/server.py"
-enabled = false
+enabled = true
 
 [servers.git]
 command = "python"

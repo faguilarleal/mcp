@@ -374,10 +374,6 @@ if __name__ == "__main__":
     logger.info("Starting Taylor Swift MCP Analysis Server...")
     # Initialize and run the server.
     mcp.run(transport='stdio')
-    # asyncio.run(
-    #     mcp.run_async(
-    #         transport="streamable-http", 
-    #         host="0.0.0.0", 
-    #         port=os.getenv("PORT", 8080),
-    #     )
-    # )
+    # mcp.run(transport='sse')
+
+

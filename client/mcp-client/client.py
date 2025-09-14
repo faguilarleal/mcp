@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 from contextlib import AsyncExitStack
+from mcp.client.sse import sse_client
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
@@ -141,41 +142,46 @@ class MCPMultiClient:
         print(f"\nSuccessfully connected to {len(connected_servers)} server(s)")
         print(f"Total available tools: {len(self.available_tools)}")
     
-    async def connect_to_single_server(self, server_script_path: str):
-        """Connect to a single server (backward compatibility)"""
-        is_python = server_script_path.endswith('.py')
-        is_js = server_script_path.endswith('.js')
-        if not (is_python or is_js):
-            raise ValueError("Server script must be a .py or .js file")
-
-        command = "python" if is_python else "node"
-        server_params = StdioServerParameters(
-            command=command,
-            args=[server_script_path],
-            env=None
-        )
-
-        stdio_transport = await self.exit_stack.enter_async_context(stdio_client(server_params))
-        stdio, write = stdio_transport
-        session = await self.exit_stack.enter_async_context(ClientSession(stdio, write))
-        await session.initialize()
+    async def connect_to_single_server(self, server_url: str = "http://127.0.0.1:8000/sse"):
+        """Connect to a single SSE server (backward compatibility)"""
+        headers = {
+            'Accept': 'text/event-stream',
+            'Cache-Control': 'no-cache'
+        }
         
-        server_name = "default"
-        self.sessions[server_name] = session
+        try:
+            print(f"Connecting to SSE server at {server_url}")
+            
+            sse_transport = await self.exit_stack.enter_async_context(
+                sse_client(server_url, headers=headers)
+            )
+            read, write = sse_transport
+            
+            session = await self.exit_stack.enter_async_context(
+                ClientSession(read, write)
+            )
+            await session.initialize()
+            
+            server_name = "taylor"  # Default server name
+            self.sessions[server_name] = session
 
-        # Get tools
-        response = await session.list_tools()
-        for tool in response.tools:
-            self.available_tools.append({
-                "name": tool.name,
-                "description": tool.description,
-                "input_schema": tool.inputSchema,
-                "_server": server_name,
-                "_original_name": tool.name
-            })
+            # Get tools
+            response = await session.list_tools()
+            for tool in response.tools:
+                self.available_tools.append({
+                    "name": tool.name,
+                    "description": tool.description,
+                    "input_schema": tool.inputSchema,
+                    "_server": server_name,
+                    "_original_name": tool.name
+                })
 
-        print(f"\nConnected to server with tools: {[tool.name for tool in response.tools]}")
-
+            print(f"✓ Connected to server with tools: {[tool.name for tool in response.tools]}")
+            
+        except Exception as e:
+            print(f"✗ Failed to connect to SSE server: {str(e)}")
+            print(f"  Make sure the server is running at {server_url}")
+            raise
 
     async def process_query(self, query: str) -> str:
         """Process a query using Claude and available tools"""
