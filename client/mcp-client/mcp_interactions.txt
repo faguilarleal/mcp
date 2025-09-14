@@ -1,0 +1,69 @@
+[2025-09-25 12:38:33] STARTUP  MCP Multi-Client initialized
+[2025-09-25 12:38:36] SERVER  Server local_server: CONNECTED - Tools: get_song_lyrics, analyze_song, compare_songs, get_song_stats_only
+[2025-09-25 12:38:40] SERVER  Server git: CONNECTED - Tools: git_status, git_diff_unstaged, git_diff_staged, git_diff, git_commit, git_add, git_reset, git_log, git_create_branch, git_checkout, git_show, git_init, git_branch
+[2025-09-25 12:38:40] SERVER  Server filesystem: CONNECTED - Tools: read_file, read_text_file, read_media_file, read_multiple_files, write_file, edit_file, create_directory, list_directory, list_directory_with_sizes, directory_tree, move_file, search_files, get_file_info, list_allowed_directories
+[2025-09-25 12:41:52] USER_QUERY [5174aac9-cc2] 'quien es selena gomez'
+[2025-09-25 12:42:07] ASSISTANT [5174aac9-cc2] 'Selena Gomez es una cantante, actriz y empresaria estadounidense muy reconocida a nivel mundial. Aquí tienes información sobre ella:
+
+## **Información Personal**
+- **Nombre completo**: Selena Marie Go...'
+[2025-09-25 12:42:14] USER_QUERY [5174aac9-cc2] 'en que año nacio'
+[2025-09-25 12:42:19] ASSISTANT [5174aac9-cc2] 'Selena Gomez nació en el año **1992**, específicamente el 22 de julio de 1992 en Grand Prairie, Texas, Estados Unidos.'
+[2025-09-25 12:42:47] SHUTDOWN  MCP Client shutting down
+[2025-09-25 14:58:50] STARTUP  MCP Multi-Client initialized
+[2025-09-25 14:58:51] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 14:58:51] SHUTDOWN  MCP Client shutting down
+[2025-09-25 14:59:04] STARTUP  MCP Multi-Client initialized
+[2025-09-25 14:59:10] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 14:59:10] SHUTDOWN  MCP Client shutting down
+[2025-09-25 14:59:31] STARTUP  MCP Multi-Client initialized
+[2025-09-25 14:59:37] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 14:59:37] SHUTDOWN  MCP Client shutting down
+[2025-09-25 15:19:27] STARTUP  MCP Multi-Client initialized
+[2025-09-25 15:19:32] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 15:19:32] SHUTDOWN  MCP Client shutting down
+[2025-09-25 15:19:38] STARTUP  MCP Multi-Client initialized
+[2025-09-25 15:19:43] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 15:19:43] SHUTDOWN  MCP Client shutting down
+[2025-09-25 16:22:33] STARTUP  MCP Multi-Client initialized
+[2025-09-25 16:22:34] SERVER  Server taylor: FAILED - unhandled errors in a TaskGroup (1 sub-exception)
+[2025-09-25 16:22:34] SHUTDOWN  MCP Client shutting down
+[2025-09-25 16:23:00] STARTUP  MCP Multi-Client initialized
+[2025-09-25 16:23:02] SERVER  Server taylor: CONNECTED - Tools: get_song_lyrics, analyze_song, compare_songs, get_song_stats_only
+[2025-09-25 16:23:39] USER_QUERY [8dafc0a6-9fc] 'me puedes analizar la cancion out of the woods de taylor swift'
+[2025-09-25 16:23:43] TOOL_CALL [8dafc0a6-9fc] analyze_song@taylor SUCCESS - Args: {"song_title": "Out of the Woods"}
+[2025-09-25 16:23:54] ASSISTANT [8dafc0a6-9fc] '¡Por supuesto! Te ayudo a analizar la canción "Out of the Woods" de Taylor Swift.
+[✅ Called analyze_song on taylor]
+¡Excelente elección! "Out of the Woods" es una canción fascinante de analizar. Aquí ...' (Tools used: analyze_song@taylor)
+[2025-09-25 16:24:27] USER_QUERY [8dafc0a6-9fc] 'que año salio esta cancion'
+[2025-09-25 16:24:34] ASSISTANT [8dafc0a6-9fc] '"Out of the Woods" fue lanzada en 2014 como parte del álbum "1989" de Taylor Swift. Específicamente:
+
+- **Álbum**: 1989
+- **Año de lanzamiento**: 2014
+- **Fecha exacta del álbum**: 27 de octubre de 20...'
+[2025-09-25 16:25:45] SHUTDOWN  MCP Client shutting down
+[2025-09-25 16:33:53] STARTUP  MCP Multi-Client initialized
+[2025-09-25 16:33:54] SERVER  Server taylor: CONNECTED - Tools: get_song_lyrics, analyze_song, compare_songs, get_song_stats_only
+[2025-09-25 16:33:59] SHUTDOWN  MCP Client shutting down
+[2025-09-25 16:34:20] STARTUP  MCP Multi-Client initialized
+[2025-09-25 16:34:21] SERVER  Server taylor: CONNECTED - Tools: get_song_lyrics, analyze_song, compare_songs, get_song_stats_only
+[2025-09-25 16:34:22] USER_QUERY [3131cfb7-f6a] 'que año salio esta cancion'
+[2025-09-25 16:34:28] ASSISTANT [3131cfb7-f6a] 'I'd be happy to help you find out what year a song was released! However, I need you to tell me which song you're asking about. Could you please specify the Taylor Swift song title you want to know th...'
+[2025-09-25 16:34:31] USER_QUERY [3131cfb7-f6a] 'me puedes analizar la cancion out of the woods de taylor swift'
+[2025-09-25 16:34:35] TOOL_CALL [3131cfb7-f6a] analyze_song@taylor SUCCESS - Args: {"song_title": "Out of the Woods"}
+[2025-09-25 16:34:45] ASSISTANT [3131cfb7-f6a] '¡Por supuesto! Te voy a analizar la canción "Out of the Woods" de Taylor Swift.
+[✅ Called analyze_song on taylor]
+Aquí tienes el análisis completo de "Out of the Woods" de Taylor Swift:
+
+## Análisis d...' (Tools used: analyze_song@taylor)
+[2025-09-25 16:35:46] SHUTDOWN  MCP Client shutting down
+[2025-09-25 16:50:52] STARTUP  MCP Multi-Client initialized
+[2025-09-25 16:50:54] SERVER  Server taylor: CONNECTED - Tools: get_song_lyrics, analyze_song, compare_songs, get_song_stats_only
+[2025-09-25 16:51:12] USER_QUERY [eae8550a-0ae] 'puedes analizar la cancion de lover de taylor'
+[2025-09-25 16:51:16] TOOL_CALL [eae8550a-0ae] analyze_song@taylor SUCCESS - Args: {"song_title": "Lover"}
+[2025-09-25 16:51:30] ASSISTANT [eae8550a-0ae] '¡Por supuesto! Voy a analizar la canción "Lover" de Taylor Swift para ti.
+[✅ Called analyze_song on taylor]
+¡Perfecto! Aquí tienes el análisis completo de "Lover" de Taylor Swift:
+
+## Análisis de "Lov...' (Tools used: analyze_song@taylor)
+[2025-09-25 16:58:32] SHUTDOWN  MCP Client shutting down

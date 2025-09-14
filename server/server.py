@@ -8,7 +8,7 @@ import asyncio
 import os
 
 # Initialize FastMCP server
-mcp = FastMCP("taylor")
+mcp = FastMCP("taylor", host='0.0.0.0', port=8000)
 
 # Constants
 SONGS_API_BASE = "https://api.lyrics.ovh/v1"
@@ -369,11 +369,19 @@ QUICK STATS for '{song_title.upper()}':
 • Emotional intensity: {emotions['emotional_intensity']}
 """
 
+from fastmcp import FastMCP
 
 if __name__ == "__main__":
     logger.info("Starting Taylor Swift MCP Analysis Server...")
-    # Initialize and run the server.
-    mcp.run(transport='stdio')
+    
+
+   
+    # desarrollo remoto    
     # mcp.run(transport='sse')
+
+    # Desarrollo local
+
+    mcp.run(transport='stdio')
+        
 
 
