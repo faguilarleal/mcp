@@ -1,8 +1,13 @@
 [servers.local_server]
 script = "../../server/server.py"
-enabled = true
+enabled = false
 
 [servers.git]
 command = "python"
 args = ["-m", "mcp_server_git", "--repository", "../../"]
+enabled = true
+
+[servers.filesystem]
+command = "mcp-server-filesystem"
+args = ["../../"]
 enabled = true
